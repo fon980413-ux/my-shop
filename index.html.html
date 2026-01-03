@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全店资源控制台 | 2026 搜索增强版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 10px; }
+        body { background-color: #0d1117; color: #e6edf3; scroll-behavior: smooth; }
+        .sidebar { width: 260px; height: 100vh; position: fixed; left: 0; top: 0; background-color: #161b22; border-right: 1px solid #30363d; padding: 1.5rem; z-index: 50; }
+        .main-content { margin-left: 260px; padding: 2rem; min-height: 100vh; }
+        @media (max-width: 768px) { .sidebar { width: 100%; height: auto; position: relative; } .main-content { margin-left: 0; } }
+        .category-link { display: block; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; color: #8b949e; transition: 0.3s; }
+        .category-link:hover { background-color: #21262d; color: #58a6ff; }
+        .card { background-color: #161b22; border: 1px solid #30363d; transition: all 0.3s; height: 100%; }
+        .search-hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="mb-6 px-2">
+            <h1 class="text-xl font-bold text-blue-400">私人英语提分训练</h1>
+        </div>
+
+        <div class="px-2 mb-8">
+            <input type="text" id="searchInput" onkeyup="searchResources()" 
+                   placeholder="🔍 搜索资料关键词..." 
+                   class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500 text-gray-300">
+        </div>
+        
+        <nav id="navMenu">
+            <a href="#english" class="category-link">📚 高中提升区</a>
+            <a href="#work" class="category-link">💼 初中提升区</a>
+            <a href="#tools" class="category-link">🛠️ 效率工具区</a>
+            <a href="#bonus" class="category-link">🎁 限时赠送区</a>
+        </nav> </aside> <main class="main-content">
+        <header class="mb-10">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 rounded-2xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-2">2026 终身会员资源库</h2>
+                <p class="text-blue-100 opacity-80">输入关键词即可快速定位您需要的资料</p>
+            </div>
+        </header>
+
+        <div id="resourceContainer">
+            <section id="english" class="mb-12 resource-section">
+                <h3 class="text-xl font-bold mb-6 text-gray-400">📚 高中提升区</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card p-5 rounded-xl material-item">
+                        <h4 class="text-lg font-bold mb-2 title">考研英语核心词汇</h4>
+                        <p class="text-sm text-gray-400 mb-4 description">包含5500词深度解析，PDF直连。</p>
+                        <a href="#" class="text-blue-400 text-sm font-semibold hover:underline">点击查看 →</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="work" class="mb-12 resource-section">
+                <h3 class="text-xl font-bold mb-6 text-gray-400">💼 初中完形填空提升区</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card p-5 rounded-xl material-item">
+                        <h4 class="text-lg font-bold mb-2 title">七年级人教版上册英语固定搭配</h4>
+                        <p class="text-sm text-gray-400 mb-4 description">七上每个单元的固定搭配短语，一单元一单元吃透。</p>
+                        <a href="https://rwu89vloo35.feishu.cn/file/CSL7bRJgSoH4kQxQejOcEtHPncc?from=from_copylink" target="_blank" class="text-blue-400 text-sm font-semibold hover:underline">点击查看 →</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="text-center text-gray-600 text-sm mt-20">
+            <p>© 2026 您的品牌库 | 搜索功能已激活</p>
+        </footer>
+    </main>
+
+    <script>
+        function searchResources() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let items = document.getElementsByClassName('material-item');
+            let sections = document.getElementsByClassName('resource-section');
+
+            for (let i = 0; i < items.length; i++) {
+                let title = items[i].querySelector('.title').innerText.toLowerCase();
+                let desc = items[i].querySelector('.description').innerText.toLowerCase();
+                if (title.includes(input) || desc.includes(input)) {
+                    items[i].classList.remove('search-hidden');
+                } else {
+                    items[i].classList.add('search-hidden');
+                }
+            }
+
+            for (let j = 0; j < sections.length; j++) {
+                let visibleItems = sections[j].querySelectorAll('.material-item:not(.search-hidden)');
+                sections[j].style.display = visibleItems.length === 0 ? 'none' : 'block';
+            }
+        }
+    </script>
+</body>
+</html>
